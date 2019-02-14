@@ -19,13 +19,7 @@ class Question extends Model
   
   }
 
-  public function replices()
-  {
-
-  //one many revers relationship
-   return $this->hasMany(Reply::class);
-
-  }
+  
 
   public function category()
  
@@ -34,6 +28,15 @@ class Question extends Model
    //one to Many  relationship
     return $this->blongsTo(Category::class);
   
+  }
+
+
+  public function replices()
+  {
+
+  //one many revers relationship
+   return $this->hasMany(Reply::class);
+
   }
 
 

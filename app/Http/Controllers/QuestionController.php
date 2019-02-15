@@ -34,7 +34,7 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {  
          Question::create($request->all());
          
     }
@@ -58,7 +58,8 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+         
+
     }
 
     /**
@@ -70,7 +71,11 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        
+            $question->update($request->all());
+
+         return 'UPDATED';          
+  
     }
 
     /**

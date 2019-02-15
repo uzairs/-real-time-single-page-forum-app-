@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Model\Question;
-use App\Model\User;
+use App\User;
 use App\Model\Like;
 class Reply extends Model
 {
@@ -12,7 +12,7 @@ class Reply extends Model
   
   {
 
-  return $this->blongsTo(User::class);
+  return $this->belongsTo(User::class);
   
 }
 
@@ -20,7 +20,7 @@ class Reply extends Model
   
   {
 
-     return $this->blongsTo(Question::class);
+     return $this->belongsTo(Question::class);
 
 
   }

@@ -3,7 +3,18 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Model\Category::class, function (Faker $faker) {
-    return [
-        //
+    
+      $word = $faker->word;
+    
+       return [
+        
+             'name' => $word,
+             'slug' => str_slug($word)
+        
+                
+
+
+
+
     ];
 });

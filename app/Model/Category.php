@@ -14,6 +14,12 @@ class Category extends Model
    return  'slug';
 
    }
+   public function getPathAttribute()
+  {
+
+       return asset("api/question/$this->slug");
+  }
+
     
 
 

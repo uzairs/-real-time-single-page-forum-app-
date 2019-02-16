@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Model\Category;
 use Illuminate\Http\Request;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
+
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +15,10 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
-         $category = Category::latest()->get();
+              $category = CategoryResource::collection(Category::latest()->get());
+
                return $category;
     }
 
@@ -56,7 +60,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return $category;
+        return new CategoryResource($category);
     }
 
     /**
@@ -91,6 +95,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
           $category->delete();
-          return  "DELETED";
+          return   "DELETED";
     }
 }

@@ -13,7 +13,7 @@ class Reply extends Model
   
   public function user()
   
-  {
+  { 
 
     //Many users one reply  
   return $this->belongsTo(User::class);
@@ -32,7 +32,7 @@ class Reply extends Model
   public function like()
   {
 
-  //Many like one Reply
+   //Many like one Reply
     return $this->hasMany(Like::class);
   
   }

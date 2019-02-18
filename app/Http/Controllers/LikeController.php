@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Model\Reply;
 use Illuminate\Http\Request;
+use App\Model\Like;
+
 
 class LikeController extends Controller
+
 {
+public function getlike()
+
+{
+    return Like::get();
+
+}
+
     
 
 public function  likeIt(Reply $reply)

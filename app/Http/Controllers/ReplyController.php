@@ -8,6 +8,17 @@ use App\Http\Resources\ReplyResource;
 
 class ReplyController extends Controller
 {
+
+
+    public function __construct()
+
+    {
+ 
+      $this->middleware('JWT', ['except' => ['index','show']]);
+    
+     
+     }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +41,8 @@ class ReplyController extends Controller
         //
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -41,7 +54,7 @@ class ReplyController extends Controller
     {
          $reply =  $question->replices()->create($request->all());
         
-         return response(['reply' => new  ReplyResource($reply)], 'CREATED');
+         return response('CREATED');
       
         }
 

@@ -10,6 +10,17 @@ use App\Model\Like;
 class LikeController extends Controller
 
 {
+    public function __construct()
+
+   {
+ 
+     $this->middleware('JWT');
+   
+    
+    }
+
+
+    
 public function getlike()
 
 {

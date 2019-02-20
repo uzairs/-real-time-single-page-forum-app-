@@ -4,12 +4,21 @@
   
     <v-toolbar-title>Uzair Durrani</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-toolbar-items class="hidden-sm-and-down">
+    <div class="hidden-sm-and-down">
+      
+      <router-link to="/forum">
       <v-btn flat>Forum</v-btn>
+      </router-link>
+      <router-link to="/question">
       <v-btn flat>Ask Question</v-btn>
+      </router-link>
+      <router-link to="/category">
       <v-btn flat>Category</v-btn>
+      </router-link>
+      <router-link to="/login">
       <v-btn flat>Login</v-btn>
-    </v-toolbar-items>
+      </router-link>
+    </div>
   </v-toolbar>
 
 </template>

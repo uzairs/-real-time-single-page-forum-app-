@@ -513,7 +513,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(47)
+var listToStyles = __webpack_require__(50)
 
 /*
 type StyleObject = {
@@ -1395,13 +1395,13 @@ module.exports = Cancel;
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(59)
+  __webpack_require__(62)
 }
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(61)
+var __vue_script__ = __webpack_require__(64)
 /* template */
-var __vue_template__ = __webpack_require__(62)
+var __vue_template__ = __webpack_require__(65)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -1444,7 +1444,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(66);
+module.exports = __webpack_require__(69);
 
 
 /***/ }),
@@ -1457,7 +1457,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Router_router_js__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Helpers_User__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Router_router_js__ = __webpack_require__(67);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -1474,18 +1475,23 @@ window.Vue = __webpack_require__(2);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 
+
+window.User = __WEBPACK_IMPORTED_MODULE_2__Helpers_User__["a" /* default */];
+//User.logout()
+console.log(__WEBPACK_IMPORTED_MODULE_2__Helpers_User__["a" /* default */].id());
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('AppHome', __webpack_require__(44));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('AppHome', __webpack_require__(47));
 
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app',
-  router: __WEBPACK_IMPORTED_MODULE_2__Router_router_js__["a" /* default */]
+  router: __WEBPACK_IMPORTED_MODULE_3__Router_router_js__["a" /* default */]
 });
 
 /***/ }),
@@ -70520,18 +70526,216 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 
 /***/ }),
 /* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Token__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AppStorage__ = __webpack_require__(46);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+
+var User = function () {
+  function User() {
+    _classCallCheck(this, User);
+  }
+
+  _createClass(User, [{
+    key: "login",
+    value: function login(data) {
+      var _this = this;
+
+      axios.post('api/auth/login', data).then(function (res) {
+        return _this.responseAfterLogin(res);
+      });
+      //.catch(error => console.log(error.response.data))
+
+    }
+  }, {
+    key: "responseAfterLogin",
+    value: function responseAfterLogin(res) {
+      var username = res.data.user;
+      var access_token = res.data.access_token;
+
+      //console.log(access_token)
+
+      if (__WEBPACK_IMPORTED_MODULE_0__Token__["a" /* default */].isValid(access_token)) {
+
+        __WEBPACK_IMPORTED_MODULE_1__AppStorage__["a" /* default */].store(access_token, username);
+      }
+    }
+  }, {
+    key: "hasToken",
+    value: function hasToken() {
+
+      var storedToken = __WEBPACK_IMPORTED_MODULE_1__AppStorage__["a" /* default */].getToken();
+
+      //console.log(storedToken);
+      if (storedToken) {
+        return __WEBPACK_IMPORTED_MODULE_0__Token__["a" /* default */].isValid(storedToken) ? true : false;
+      }
+      return false;
+    }
+  }, {
+    key: "loggedIn",
+    value: function loggedIn() {
+
+      return this.hasToken();
+    }
+  }, {
+    key: "logout",
+    value: function logout() {
+
+      __WEBPACK_IMPORTED_MODULE_1__AppStorage__["a" /* default */].clear();
+    }
+  }, {
+    key: "name",
+    value: function name() {
+
+      if (this.loggedIn()) {
+        return __WEBPACK_IMPORTED_MODULE_1__AppStorage__["a" /* default */].getUser();
+      }
+    }
+  }, {
+    key: "id",
+    value: function id() {
+
+      if (this.loggedIn()) {
+
+        var payload = __WEBPACK_IMPORTED_MODULE_0__Token__["a" /* default */].payload(__WEBPACK_IMPORTED_MODULE_1__AppStorage__["a" /* default */].getToken());
+        return payload.sub;
+      }
+    }
+  }]);
+
+  return User;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (User = new User());
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Token = function () {
+    function Token() {
+        _classCallCheck(this, Token);
+    }
+
+    _createClass(Token, [{
+        key: "isValid",
+        value: function isValid(token) {
+
+            var payload = this.payload(token);
+
+            if (payload) {
+                return payload.iss == "http://localhost:8000/api/auth/login" ? true : false;
+            }
+
+            return false;
+        }
+    }, {
+        key: "payload",
+        value: function payload(token) {
+
+            var payload = token.split('.')[1];
+
+            return this.decode(payload);
+        }
+    }, {
+        key: "decode",
+        value: function decode(payload) {
+            // atob Method base 64decoded
+            return JSON.parse(atob(payload));
+        }
+    }]);
+
+    return Token;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Token = new Token());
+
+/***/ }),
+/* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AppStorage = function () {
+    function AppStorage() {
+        _classCallCheck(this, AppStorage);
+    }
+
+    _createClass(AppStorage, [{
+        key: 'storeToken',
+        value: function storeToken(token) {
+
+            localStorage.setItem('token', token);
+        }
+    }, {
+        key: 'storeUser',
+        value: function storeUser(user) {
+
+            localStorage.setItem('user', user);
+        }
+    }, {
+        key: 'store',
+        value: function store(token, user) {
+
+            this.storeToken(token);
+            this.storeUser(user);
+        }
+    }, {
+        key: 'clear',
+        value: function clear() {
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+        }
+    }, {
+        key: 'getToken',
+        value: function getToken() {
+
+            return localStorage.getItem('token');
+        }
+    }, {
+        key: 'getUser',
+        value: function getUser() {
+
+            return localStorage.getItem('user');
+        }
+    }]);
+
+    return AppStorage;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (AppStorage = new AppStorage());
+
+/***/ }),
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(45)
+  __webpack_require__(48)
 }
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(48)
+var __vue_script__ = __webpack_require__(51)
 /* template */
-var __vue_template__ = __webpack_require__(63)
+var __vue_template__ = __webpack_require__(66)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -70570,13 +70774,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(46);
+var content = __webpack_require__(49);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -70596,7 +70800,7 @@ if(false) {
 }
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -70610,7 +70814,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ (function(module, exports) {
 
 /**
@@ -70643,14 +70847,14 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ToolBar__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ToolBar__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ToolBar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ToolBar__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AppFooter__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AppFooter__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AppFooter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AppFooter__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Login_login__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Login_login___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Login_login__);
@@ -70675,19 +70879,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(50)
+  __webpack_require__(53)
 }
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(52)
+var __vue_script__ = __webpack_require__(55)
 /* template */
-var __vue_template__ = __webpack_require__(53)
+var __vue_template__ = __webpack_require__(56)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -70726,13 +70930,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(51);
+var content = __webpack_require__(54);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -70752,7 +70956,7 @@ if(false) {
 }
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -70766,7 +70970,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 52 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -70800,7 +71004,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -70863,19 +71067,19 @@ if (false) {
 }
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(55)
+  __webpack_require__(58)
 }
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(57)
+var __vue_script__ = __webpack_require__(60)
 /* template */
-var __vue_template__ = __webpack_require__(58)
+var __vue_template__ = __webpack_require__(61)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -70914,13 +71118,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(56);
+var content = __webpack_require__(59);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -70940,7 +71144,7 @@ if(false) {
 }
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -70954,7 +71158,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -70973,7 +71177,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -71003,13 +71207,13 @@ if (false) {
 }
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(60);
+var content = __webpack_require__(63);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -71029,7 +71233,7 @@ if(false) {
 }
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -71037,13 +71241,13 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -71093,30 +71297,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-   data: function data() {
+  data: function data() {
 
-      return {
+    return {
 
-         form: {
-            email: null,
-            password: null
-         }
-      };
-   },
-
-   methods: {
-      login: function login() {
-         axios.post('api/auth/login', this.form).then(function (res) {
-            return console.log(res.data);
-         });
-         //.catch(error => console.log(error.response.data))
+      form: {
+        email: null,
+        password: null
       }
-   }
+    };
+  },
+
+  methods: {
+    login: function login() {
+
+      User.login(this.form);
+    }
+  }
 
 });
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -71194,7 +71396,7 @@ if (false) {
 }
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -71224,13 +71426,13 @@ if (false) {
 }
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Login_login__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Login_login___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Login_login__);
 
@@ -71251,7 +71453,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -73876,7 +74078,7 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

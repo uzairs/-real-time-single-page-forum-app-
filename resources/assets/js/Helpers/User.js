@@ -8,6 +8,8 @@ login(data) {
 
     axios.post('api/auth/login',data)
     .then(res => this.responseAfterLogin(res))
+  
+  
     //.catch(error => console.log(error.response.data))
 
 
@@ -22,6 +24,7 @@ responseAfterLogin(res){
   if(Token.isValid(access_token)){
     
       AppStorage.store(access_token,username)
+      window.location = '/forum'
   }
 }
 
@@ -50,6 +53,7 @@ loggedIn()
 logout(){
 
   AppStorage.clear()
+  window.location = '/forum'
 }
 
 

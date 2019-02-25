@@ -22,5 +22,6 @@ Route::get('/', function() {
 });
 Route::view('/', 'new');
 Route::view('/{any}','new');
+Route::view('/{any}/{any1}','new');
 
 

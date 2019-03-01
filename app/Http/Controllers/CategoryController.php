@@ -49,7 +49,7 @@ class CategoryController extends Controller
          $category->slug = str_slug($request->name);
          $category->save();
 
-         return response('CREATED');
+           return response(new CategoryResource($category));
     }
 
     /**
@@ -83,8 +83,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-         $category->update($request->all());
-    }
+         //$category->update($request->all());
+    
+           $category->update([
+                     'name'=> $request->name,
+                     'slug'=> $request->str_slug($request->name)
+
+
+           ]);
+
+      return reponse(new CategoryResource($category));
+    
+        }
 
     /**
      * Remove the specified resource from storage.

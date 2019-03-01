@@ -11,11 +11,26 @@ v-if="editing"
 
 
 <show-question
- :data = question
   v-else
+  :data = question
+
   >
 
 </show-question>
+
+
+<v-container>
+
+<replies :question="question"> </replies>
+
+<new-reply :questionSlug="question.slug">
+
+
+</new-reply>
+
+
+
+</v-container>
 
 </div>
 
@@ -25,10 +40,15 @@ v-if="editing"
 </template>
 
 <script>
-import  ShowQuestion from './ShoWQuestion'
-import  EditQuestion from './EditQuestion'
+import  ShowQuestion  from './ShoWQuestion'
+import  EditQuestion  from './EditQuestion'
+import  Replies      from '../reply/replies'  
+import  NewReply     from '../reply/newReply'
+
 export default {
-components: {ShowQuestion,EditQuestion},
+
+components: {ShowQuestion,EditQuestion,Replies,NewReply},
+
 data() {
 
 return {

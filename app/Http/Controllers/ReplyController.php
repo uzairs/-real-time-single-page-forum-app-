@@ -54,7 +54,8 @@ class ReplyController extends Controller
     {
          $reply =  $question->replices()->create($request->all());
         
-         return response('CREATED');
+         return response(['reply'=> new ReplyResource($reply)]
+        );
       
         }
 
@@ -105,6 +106,6 @@ class ReplyController extends Controller
     {
     
          $reply->delete();          
-        return respones('DELETED');
+        return response('DELETED');
     }
 }

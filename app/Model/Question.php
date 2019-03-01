@@ -14,6 +14,8 @@ class Question extends Model
 
   //protected $guarded = [];
   protected $fillable =  ['title', 'slug', 'body', 'user_id','category_id'];
+  protected $with = ['replices'];
+  
   public static function boot()
   
   {
@@ -54,7 +56,7 @@ class Question extends Model
  
  {
 
-   //one to Many  relationship
+   //one category to Many question  relationship
     return $this->belongsTo(Category::class);
   
   }
@@ -63,8 +65,8 @@ class Question extends Model
   public function replices()
   {
 
-  //one many revers relationship
-   return $this->hasMany(Reply::class);
+  //one question to many replicse 
+   return $this->hasMany(Reply::class)->latest();
 
   }
 

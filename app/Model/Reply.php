@@ -9,13 +9,28 @@ use App\Model\Like;
 
 class Reply extends Model
 {
+  
+  protected static function boot() 
+  {
+
+    parent::boot();
+
+    static::creating(function($reply) {
+
+       $reply->user_id = auth()->id();
+
+    });
+  
+  }
+
   protected $guarded = [];
   
+
   public function user()
   
   { 
 
-    //Many users one reply  
+    //Many reply one user  
   return $this->belongsTo(User::class);
   
 }
@@ -23,7 +38,7 @@ class Reply extends Model
   public function question()
   
   {
-     //Many question one reply 
+     //Many reply one question  
      return $this->belongsTo(Question::class);
 
 

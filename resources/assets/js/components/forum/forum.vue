@@ -5,6 +5,7 @@
         <v-flex xs8>
   
   <question
+
      v-for="question in questions"
      :key="question.path"
      :data=question
@@ -14,7 +15,10 @@
   </question>
         </v-flex>
    
-    <h1>Sidebar</h1>
+   <v-flex xs4>
+    <app-sidebar></app-sidebar>
+   </v-flex>
+
 
     </v-layout>
     
@@ -22,10 +26,10 @@
 </template>
 
 <script>
-
+import AppSidebar from './AppSidebar'
 import question from './question'
 export default {
-components:{question},
+components:{question,AppSidebar},
 data() {
    return {
        questions:{}

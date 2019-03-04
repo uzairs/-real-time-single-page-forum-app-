@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         
              return $reply->like()->save(factory(Like::class)->make());
 
+             
 
             });
 

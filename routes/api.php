@@ -26,10 +26,13 @@ Route::apiResource('/question/{question}/reply', 'ReplyController');
 
 Route::post('/like/{reply}', 'LikeController@likeIt');
 
-Route::Delete('/unlike/{reply}', 'LikeController@unlikeIt');
+Route::Delete('/like/{reply}', 'LikeController@unlikeIt');
 
 Route::get('/like','LikeController@getlike');
 
+Route::post('/notifications','NotificationController@index');
+Route::post('/markAsRead','NotificationController@markAsRead');
+ 
 
 Route::group([
 

@@ -4,6 +4,8 @@
   
     <v-toolbar-title>Uzair Durrani</v-toolbar-title>
     <v-spacer></v-spacer>
+    <app-notification v-if="loggedIn"></app-notification>
+
     <div class="hidden-sm-and-down">
       
       
@@ -25,10 +27,13 @@
 </template>
 
 <script>
+import  AppNotification from "./AppNotification"
 export default {
-
+components:{AppNotification},
 data() {
 return {
+
+   loggedIn:  User.loggedIn(),
 
 items: [
     {title : 'Forum', to:'/forum', show:true},

@@ -34,7 +34,10 @@ public function  likeIt(Reply $reply)
 
 {
 
-     $reply->like()->create(['user_id' => '1']);
+     $reply->like()->create([
+
+         'user_id'=> auth()->id()
+     ]);
 
      return "CREATED";
 
@@ -43,8 +46,8 @@ public function  likeIt(Reply $reply)
 public function unlikeIt(Reply $reply)
 
 {
-
-   $reply->like()->where('user_id', '1')->first()->delete();
+    $reply->like()->where('user_id', auth()->id())->first()->delete();
+  // $reply->like()->where('user_id', '1')->first()->delete();
    return "Deleted";
 
 } 

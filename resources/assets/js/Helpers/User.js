@@ -86,7 +86,7 @@ own(id) {
 
 
 Admin() {
-  return this.id() == 3
+  return this.id() == 11
 
 }
 

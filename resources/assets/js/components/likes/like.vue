@@ -33,6 +33,16 @@ computed:{
   }
 },
 
+created(){
+Echo.channel('likeChannel')
+    .listen('LikeEvent', (e) => {
+        if(this.content.id == e.id){
+         e.type== 1? this.count++ : this.count--
+        }
+        
+    });
+},
+
 methods: {
  
      likeIt() {

@@ -76,6 +76,8 @@ axios.post("/api/notifications")
   this.unreadCount = res.data.unread.length; 
 
 })
+  .catch(error =>  Exception.handle(error))
+
 .catch(error => console.log(error.response.data));
  },
 

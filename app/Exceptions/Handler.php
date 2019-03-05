@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
 
         elseif($exception instanceof  TokenInvalidException) {
 
-            return response(['error'=>' Token  is Invalid']);
+            return response(['error'=>' Token  is invalid']);
            
            }
    

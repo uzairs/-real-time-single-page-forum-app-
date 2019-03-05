@@ -19,12 +19,21 @@ Vue.use(VueSimplemde)
 
 import md from 'marked'
 window.md = md
+
 import User from './Helpers/User'
 window.User = User
 
 console.log(User.id());
 
+
 console.log(User.loggedIn());
+
+import Exception from './Helpers/Exception'
+window.Exception = Exception
+
+
+
+
 
 window.EventBus = new Vue();
 /**

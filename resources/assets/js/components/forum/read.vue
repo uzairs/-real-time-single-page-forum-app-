@@ -23,13 +23,12 @@ v-if="editing"
 
 <replies :question="question"> </replies>
 
-<new-reply :questionSlug="question.slug">
-
-
-</new-reply>
-
-
-
+<new-reply v-if="loggedIn" :questionSlug="question.slug"></new-reply>
+<div class="text-xs-center" v-else>
+    <router-link to="/login">
+    <v-btn outline color="indigo">LOGIN TO ASK QUESTION</v-btn>
+    </router-link>
+</div>
 </v-container>
 
 </div>
@@ -70,6 +69,11 @@ create() {
       this.getQuestion()
 
      
+},
+computed: {
+loggedIn(){
+  return User.loggedIn()
+}
 },
 
 methods:{

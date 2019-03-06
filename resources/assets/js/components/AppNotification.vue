@@ -40,7 +40,8 @@ return {
 
      read: {},
     unread: {},
-     unreadCount : 0
+     unreadCount : 0,
+        sound: "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3"
 }
 
 },
@@ -57,14 +58,25 @@ return {
 //notification listeners call in there
 Echo.private('App.User.' + User.id())
     .notification((notification) => {
+
+      
       this.unread.unshift(notification)
       this.unreadCount++
+     this.playSound()
     });
 
 
  },
 
 methods: {
+
+
+
+    playSound(){
+
+      let alert = new Audio(this.sound)
+      alert.play()
+    },
 
  getNotifications() {
 

@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+
+
 Vue.use(VueRouter)
 
-
+        
 
 import  Login from '../components/Login/login'
 import  Signup from '../components/Login/signup'
 import  CreateCategory from'../components/Category/CreateCategory'
-import Forum from '../components/forum/Forum'
+import  Forum from '../components/forum/Forum'
 import  Logout from '../components/Login/logout'
 import  Read from '../components/forum/Read'
 import  Create from '../components/forum/Create'

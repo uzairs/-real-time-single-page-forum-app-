@@ -1,8 +1,12 @@
 <template>
     
-  <v-toolbar>
+  <v-toolbar  color="black" dark>
   
-    <v-toolbar-title>Uzair Durrani</v-toolbar-title>
+    <v-toolbar-title>
+<router-link class="white--text" to="/">Uzair-Durrani</router-link>
+
+
+    </v-toolbar-title>
     <v-spacer></v-spacer>
     <app-notification v-if="loggedIn"></app-notification>
 

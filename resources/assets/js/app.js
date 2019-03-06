@@ -9,6 +9,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 
@@ -32,6 +33,7 @@ import Exception from './Helpers/Exception'
 window.Exception = Exception
 
 
+       
 
 
 

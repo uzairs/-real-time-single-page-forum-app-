@@ -1,6 +1,15 @@
 <template>
     <v-container>
  
+  <v-alert v-if="errors"
+      :value="true"
+      type="error"
+    >
+      This is a error alert.
+    </v-alert>
+
+
+
   <v-form @submit.prevent="submit">
 
   <v-text-field
@@ -11,8 +20,10 @@
           
           </v-text-field>
  
-            <v-btn type="submit" color="blue" v-if="editSlug">Update</v-btn>
-            <v-btn type="submit" color="teal" v-else>Create</v-btn>
+            <v-btn type="submit" color="blue" v-if="editSlug"
+               :disabled="disabled" >Update</v-btn>
+            <v-btn type="submit" color="teal" v-else
+              :disabled="disabled">Create</v-btn>
 
   </v-form>
  
@@ -70,7 +81,9 @@ export default {
          name:null
 },
       categories:{},
-      editSlug:null,       
+      editSlug:null,  
+      errors:null,
+           
 
    }
 
@@ -118,6 +131,7 @@ axios.post('/api/category',this.form)
       this.form.name = null 
     
     })
+    .catch(error => this.errors = error.response.data.errors);
   },
  
  
@@ -135,6 +149,13 @@ axios.post('/api/category',this.form)
   
   }
        
+  },
+  computed: {
+  
+  disabled() {
+     return  !this.form.name
+
+  }    
   }
 
 
